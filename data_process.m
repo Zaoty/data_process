@@ -1,7 +1,7 @@
 % filepath: /home/q1ren/matlab_ws/catching/catching_brick_data_full_opti.m
 % 解包 rosbag 文件并读取各 topic 的数据
 clear all
-bag = rosbag('F:\Home\practice_data\franka_catch_full_opti_record_consider.bag');
+bag = rosbag('/home/q1ren/practice_data/franka_catch_record_full_opti9_deside.bag');
 % bag = rosbag('/home/q1ren/franka_catch_full_opti_record1.bag');
 
 % 读取各 topic 的消息
@@ -62,7 +62,7 @@ efforts = cell2mat(cellfun(@(m) m.Effort(:)', joint_structs, 'UniformOutput', fa
 % [Deleted Figure 2: Joint Torques]
 
 % 读取第二个 rosbag 文件
-bag2 = rosbag('F:\Home\practice_data\franka_catch_without_pre-optimization_record_with_zmin_02_consider.bag');
+bag2 = rosbag('/home/q1ren/practice_data/franka_catch_record_without_pre_opti1.bag');
 % bag2 = rosbag('/home/q1ren/franka_catch_without_pre-configuration_record1.bag');
 
 % 提取第二个文件的关节力矩
@@ -104,7 +104,8 @@ T_total2 = sqrt(Tx2.^2 + Ty2.^2 + Tz2.^2);
 % [Deleted Figure 6: Torque Component Comparison (2 Sets)]
 
 % 读取第三个 rosbag 文件
-bag3 = rosbag('F:\Home\practice_data\franka_catch_with_only_TO_record1.bag');
+% bag3 = rosbag('F:\Home\practice_data\franka_catch_with_only_TO_record1.bag');
+bag3 = rosbag('/home/q1ren/practice_data/franka_catch_with_only_TO_record1.bag');
 delta_to = 18.496 - 8.628; % 第三个文件比第一个文件早的时间差
 
 % 提取第三个文件的关节力矩
@@ -447,8 +448,8 @@ lgd.Position(2) = 0.02; % 底部
 disp('正在提取 Link 和 Model States 数据以绘制对比图...');
 
 % 定义时间偏移 (将关键时刻设为 0)
-t_offset1 = 18.407;
-t_offset2 = 17.844+0.614;
+t_offset1 = 18.407-0.136;
+t_offset2 = 17.844+0.614-0.948-0.229;
 t_offset3 = 8.483;
 
 % 定义偏移量
@@ -513,8 +514,8 @@ fext_time_plot2 = fext_msgs2.MessageList.Time - fext_msgs2.MessageList.Time(1) -
 fext_time_plot3 = fext_msgs3.MessageList.Time - fext_msgs3.MessageList.Time(1) - t_offset3;
 
 % --- 数据截取 (0s - 5s) ---
-t_min = 0;
-t_max = 2;
+t_min = -1;
+t_max = 3;
 
 % Bag 1
 idx_l1 = link_time1 >= t_min & link_time1 <= t_max;
